@@ -22,7 +22,7 @@ exit_btn.onclick = () => {
 
 //if continueQuiz button clicked
 continue_btn.onclick = ()=> {
-    info_box.classList.remove("activeInfo"); //hide info box
+    info_box.classList.remove("activeQuiz"); //hide info box
     quiz_box.classList.add("activeQuiz"); //show quiz
     showQuestions(0); //calling showQuestions function
     queCounter(1); //passing 1 parameter to queCounter
@@ -50,7 +50,7 @@ function showQuestions(questions, quizContainer){
         );
 
     }
-    quizContainder.innerHTML = ouput.join('');
+    quiz_box.innerHTML = output.join('');
 }
 
 //creating question and answers
@@ -332,7 +332,8 @@ function startTimeLine(time) {
 }
 function queCounter(index) {
     let totalQueCounTag = '<span><p>' + index + '</p> of <p>' + questions.length + '</p> Qustions</span>';
-    bottom_ques_counter.innerHTML = totalQUECounTag;
+    
+    bottom_ques_box.innerHTML = totalQUECounTag;   
 
 }
 

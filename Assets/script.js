@@ -30,6 +30,29 @@ continue_btn.onclick = ()=> {
     startTimer(0); //calling startTimerLine function
 }
 
+function showQuestions(questions, quizContainer){
+    var output = [];
+    var answers;
+    for(var i=0; i<questions.length; i++){
+        answers = [];
+        for(letter in questions[i].answers){
+            answers.push(
+                '<label>'
+                +'<input type="radio" name="question+'+i+'" value="'+letter+'">'
+                +letter + ':'
+                +questions[i].answers[letter]
+            +'</label>'
+        );
+    }
+    output.push(
+        '<div class="question">' + questions[i].question + '</div>'
+        +'<div class="answers">' + answers.join('') + '</div>'
+        );
+
+    }
+    quizContainder.innerHTML = ouput.join('');
+}
+
 //creating question and answers
 let questions = [
     {
@@ -149,7 +172,7 @@ restart_quiz.onclick = () => {
     que_numb = 1;
     userScore = 0;
     widthValue = 0;
-    showQuestions(que_count);
+    showQuestions(questions, quizContainer);
     queCounter(que_numb);
     clearInterval(counter);
     clearInterval(counterLine);
@@ -158,35 +181,13 @@ restart_quiz.onclick = () => {
     timeText.textContent = "Time Left";
     next_btn.classList.remove("show");
 
-    //if quiz button clicked
-    quit_quiz.onclick = () => {
-        window.location.reload(); //reload the current window
-    }
-
-    const next_btn = document.querySelector("footer .next_btn");
+    
+    
+    
     const bottom_ques_counter = document.querySelector("footer .total_que");
 
-    //if Next Que button clicked
-    next_btn.onclick = () => {
-        if (que_count < questions.lenght - 1) { //if question count is less than total question length
-            que_count++;
-            que_numb++;
-            showQuetions(que_count);
-            queCounter(que_numb);
-            clearInterval(counter);
-            clearInterval(counterLine);
-            startTimer(timeValue);
-            startTimeLine(widthValue);
-            timeText.textContent = "Time Left";
-            next_btn.classList.remove("show");
-
-        } else {
-            clearInterval(counter);
-            clearInterval(counterLine);
-            showResult();
-
-        }
-    }
+    
+    
 
     //creating a new span and div tag for quesion and option 
     let que_tag = '<span>' + questions[index].numb + ". " + questions[index].question + "</span>";
@@ -202,6 +203,30 @@ restart_quiz.onclick = () => {
 
     for (i = 0; i < option.lenght; i++) {
         option[i].setAttribute("onclick", "optionSelected(this)");
+    }
+}
+     quit_quiz.onclick = () => {
+    window.location.reload(); //reload the current window
+}
+const next_btn = document.querySelector("footer .next_btn");
+next_btn.onclick = () => {
+    if (que_count < questions.lenght - 1) { //if question count is less than total question length
+        que_count++;
+        que_numb++;
+        showQuetions(questions, quizContainer);
+        queCounter(que_numb);
+        clearInterval(counter);
+        clearInterval(counterLine);
+        startTimer(timeValue);
+        startTimeLine(widthValue);
+        timeText.textContent = "Time Left";
+        next_btn.classList.remove("show");
+
+    } else {
+        clearInterval(counter);
+        clearInterval(counterLine);
+        showResult();
+
     }
 }
 

@@ -1,3 +1,14 @@
+//steps for creating a quiz
+//step 1: user able to go to application and then start the quiz
+//step 2: user should able to see the question and be able to select the option
+//step 3; user able to see the timer
+//steo 4: after answer a question, the score should be track
+//step 5: after answer a question, able to go next question
+//step 6: after answer the last question, able to see user's total score
+
+
+
+
 // select all required elements
 const start_btn = document.querySelector(".start_btn");
 const info_box = document.querySelector(".info_box");
@@ -7,9 +18,10 @@ const quiz_box = document.querySelector(".quiz_box");
 const result_box = document.querySelector(".result_box");
 const option_list = document.querySelector(".option_list");
 const time_line = document.querySelector(".header .time_line");
-const timeText = document.querySelector(".timer .time_left_text");
+const timeText = document.querySelector(".time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
-
+const bottom_ques_counter = document.querySelector(".total_que");
+let question_count=0
 //if startQuiz button clicked 
 start_btn.onclick = () => {
     info_box.classList.add("activeInfo"); //show info box
@@ -22,35 +34,34 @@ exit_btn.onclick = () => {
 
 //if continueQuiz button clicked
 continue_btn.onclick = ()=> {
-    info_box.classList.remove("activeQuiz"); //hide info box
+    info_box.classList.remove("activeInfo"); //hide info box
     quiz_box.classList.add("activeQuiz"); //show quiz
-    showQuestions(0); //calling showQuestions function
+    showQuestions(questions,question_count); //calling showQuestions function
     queCounter(1); //passing 1 parameter to queCounter
-    startTimer(15); //calling startTimer function
-    startTimer(0); //calling startTimerLine function
+    startTimer(90); //calling startTimer function
+    
 }
 
-function showQuestions(questions, quizContainer){
+function showQuestions(questions, index){
     var output = [];
     var answers;
-    for(var i=0; i<questions.length; i++){
-        answers = [];
-        for(letter in questions[i].answers){
-            answers.push(
-                '<label>'
-                +'<input type="radio" name="question+'+i+'" value="'+letter+'">'
-                +letter + ':'
-                +questions[i].answers[letter]
-            +'</label>'
-        );
-    }
+    answers = [];
+    for(let i = 0; i < questions[index].options.length; i++){
+        answers.push(
+            '<label>'
+            +'<input type="radio" name="question+'+i+'" value="'+ i +'">'
+            + i + ': '
+            + questions[index].options[i]
+        +'</label>'
+    );
+     }
     output.push(
-        '<div class="question">' + questions[i].question + '</div>'
+        '<div class="question">' + questions[index].question + '</div>'
         +'<div class="answers">' + answers.join('') + '</div>'
         );
 
-    }
-    quiz_box.innerHTML = output.join('');
+   
+        quiz_box.innerHTML = output.join('') + "<footer><button class='next_btn'>Next Que</button></footer>";
 }
 
 //creating question and answers
@@ -184,7 +195,7 @@ restart_quiz.onclick = () => {
     
     
     
-    const bottom_ques_counter = document.querySelector("footer .total_que");
+    
 
     
     
@@ -332,9 +343,9 @@ function startTimeLine(time) {
 }
 function queCounter(index) {
     let totalQueCounTag = '<span><p>' + index + '</p> of <p>' + questions.length + '</p> Qustions</span>';
-    
-    bottom_ques_box.innerHTML = totalQUECounTag;   
+    bottom_ques_counter.innerHTML = totalQueCounTag;
 
+    
 }
 
 

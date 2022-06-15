@@ -30,7 +30,7 @@ body{
 }
 
 .info_box.activeInfo,
-.quiz_box.info_box.activeQuiz,
+.quiz_box.activeQuiz,
 .result_box.activeResult{
     opacity: 1;
     z-index: 5;
